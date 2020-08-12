@@ -3,7 +3,7 @@ import * as fromAppTypes from './types'
 export const store = {
     state: {
         isAuth: false,
-        currentComponent: null
+        currentUser: null
 
     },
     mutations: {
