@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
             'email_verified_at' => now(),
         ]);
+        $this->call([
+            CurrencySeeder::class,
+        ]);
     }
 }
