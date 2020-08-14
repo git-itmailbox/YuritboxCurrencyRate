@@ -55,7 +55,7 @@ class ImportDailyRates extends Command
             try {
                 $date = Carbon::create($fromDate);
             } catch (\Exception $exception) {
-                echo 'Wrong date format. ' . $exception->getMessage() . PHP_EOL;
+                $this->error( 'Wrong date format. ' . $exception->getMessage());
                 return 0;
             }
         }
@@ -92,7 +92,7 @@ class ImportDailyRates extends Command
         $date =  Carbon::create($data['ValCursDate']);
         $count = History::where(History::FIELD_DATE, $date->toDateString())->count();
         if ($count > 0){
-            echo 'Db has already data rates by date: ' . $data['ValCursDate'] . '. Skipping...' . PHP_EOL;
+            $this->info( 'Db has already data rates by date: ' . $data['ValCursDate'] . '. Skipping...');
             return 0;
         }
 

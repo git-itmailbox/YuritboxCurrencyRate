@@ -43,7 +43,7 @@ class CreateUser extends Command
         $password = $this->option('password');
         $email = $this->option('email');
         if(!$username || !$email) {
-            echo 'You did not provide email or username, so enter them now' . PHP_EOL;
+            $this->info('You did not provide email or username, so enter them now');
             $username = $this->ask('Please input username');
             $email = $this->ask('Please input email');
             $password = $this->ask('Please input password');

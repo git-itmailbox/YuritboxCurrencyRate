@@ -1,9 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
-use App\History;
+
+use App\Http\Resources\CurrencyCollection;
+use App\Http\Resources\HistoryCollection;
+use App\Models\Currency;
+use App\Models\History;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class HistoryController extends Controller
 {
@@ -12,19 +19,19 @@ class HistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $collection = new CurrencyCollection(QueryBuilder::for(Currency::class)
+            ->with(['latestRate'])
+            ->allowedFilters([
+                AllowedFilter::exact('numcode'),
+                'charcode'
+            ])
+            ->paginate($request->get('size'))
+            ->appends($request->input())
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        );
+        return response()->json($collection);
     }
 
     /**
@@ -41,33 +48,23 @@ class HistoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
+     * @param Currency $currency
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function show(History $history)
+    public function show(Currency $currency)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(History $history)
-    {
-        //
+        $currency->load('histories');
+        return response($currency);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\History  $history
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, History $history)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +72,10 @@ class HistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\History  $history
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(History $history)
+    public function destroy($id)
     {
         //
     }

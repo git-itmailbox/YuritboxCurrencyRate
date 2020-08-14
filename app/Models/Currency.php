@@ -20,6 +20,13 @@ class Currency extends Model
 
     public function histories()
     {
-        $this->hasMany(History::class);
+        return $this->hasMany(History::class);
+    }
+
+    public function latestRate()
+    {
+        return $this->hasOne(History::class)->orderByDesc(History::FIELD_DATE);
+
+//        return $this->histories()->orderBy(History::FIELD_DATE)->latest()->first();
     }
 }

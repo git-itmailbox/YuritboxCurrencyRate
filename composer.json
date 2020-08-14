@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "orchestra/parser": "^5.0",
+        "spatie/laravel-query-builder": "^2.8",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

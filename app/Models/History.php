@@ -19,6 +19,8 @@ class History extends Model
         self::FIELD_DATE,
         self::FIELD_NOMINAL,
     ];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
 
     public function currency()
     {
