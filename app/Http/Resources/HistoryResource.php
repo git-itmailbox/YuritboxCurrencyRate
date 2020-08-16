@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\History;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class HistoryResource extends JsonResource
@@ -14,6 +15,12 @@ class HistoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->resource->id,
+            'value' => $this->resource->value / History::FACTOR ,
+            'nominal' => $this->resource->nominal,
+            'date' => $this->resource->date,
+            'currency_id' => $this->resource->currency_id,
+        ];
     }
 }

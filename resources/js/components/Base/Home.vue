@@ -67,16 +67,6 @@
                 collapsed: false,
                 sysUserName: '',
                 sysUserAvatar: '',
-                form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
-                }
             }
         },
         methods: {
@@ -110,7 +100,6 @@
 
 
             },
-            //折叠导航栏
             collapse: function () {
                 this.collapsed = !this.collapsed
             },
@@ -120,14 +109,9 @@
         },
         mounted() {
             const user = this.$auth.user()
-            console.log(this.$router.options.routes[0].children)
             if (user) {
-                // user = JSON.parse(user)
                 this.sysUserName = user.name || ''
                 this.sysUserAvatar = user.avatar || ''
-                console.log(user.name)
-                console.log(this.sysUserName)
-
             }
 
             if (window.innerWidth < 768) {

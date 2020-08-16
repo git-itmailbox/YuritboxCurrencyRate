@@ -7,3 +7,4 @@ export const CURRENCY_SET_LOADING = '[Currency] Set loading';
 export const CURRENCY_SET_ALL = '[Currency] Set all list';
 export const CURRENCY_SET_ONE = '[Currency] Set one';
 export const CURRENCY_SET_PAGINATION = '[Currency] Set pagination';
+export const CURRENCY_RESET_PAGINATION = '[Currency] Reset pagination';

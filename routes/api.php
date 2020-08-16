@@ -29,12 +29,13 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 
 Route::group(['prefix' => 'rates'], function ($router) {
+    Route::get('/', 'CurrencyController@index');
+    Route::get('/{currency}', 'CurrencyController@show');
+
+});
+
+Route::group(['prefix' => 'history'], function ($router) {
     Route::get('/', 'HistoryController@index');
-    Route::get('/{currency}', 'HistoryController@show');
-//    Route::post('register', 'AuthController@register');
-//    Route::post('logout', 'AuthController@logout');
-//    Route::post('refresh', 'AuthController@refresh');
-//    Route::post('me', 'AuthController@me');
 
 });
 

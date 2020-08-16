@@ -3,6 +3,7 @@
         <el-table
             v-loading="currencyLoading"
             :data="currencyList"
+            @row-click="viewCurrencyHistory"
             style="width: 100%">
             <el-table-column
                 prop="name"
@@ -36,7 +37,7 @@
             @current-change="handleCurrentChange"
             :current-page="currencyPagination.current"
             :page-sizes="[5, 10, 20, 50]"
-            :page-size="currencyPagination.size"
+            :page-size="parseInt(currencyPagination.size)"
             layout="sizes, prev, pager, next"
             :total="currencyPagination.total">
         </el-pagination>
@@ -46,6 +47,7 @@
 <script>
     import {mapActions, mapGetters, mapMutations} from 'vuex'
     import {CURRENCY_FETCH_ALL,CURRENCY_SET_ALL} from '../../store/currencies/types'
+    import {ROUTE_CURRENCIES_VIEW} from "../../routes/currencies";
 
     export default {
         data() {
@@ -54,8 +56,8 @@
             };
         },
         created() {
-            this[CURRENCY_SET_ALL] = []
-            this[CURRENCY_FETCH_ALL]()
+                this[CURRENCY_SET_ALL] = []
+                this[CURRENCY_FETCH_ALL]()
         },
         mounted() {
 
@@ -73,6 +75,9 @@
             handleCurrentChange(val) {
                 const paginationOptions = {...this.currencyPagination, ...{page:val}}
                 this[CURRENCY_FETCH_ALL](paginationOptions)
+            },
+            viewCurrencyHistory(item){
+                this.$router.push({ name: ROUTE_CURRENCIES_VIEW, params: { id: item.id } })
             }
         },
     }

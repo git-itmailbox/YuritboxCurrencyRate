@@ -7,42 +7,34 @@ use App\Http\Resources\CurrencyCollection;
 use App\Http\Resources\HistoryCollection;
 use App\Models\Currency;
 use App\Models\History;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 
 class HistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
-        $collection = new CurrencyCollection(QueryBuilder::for(Currency::class)
-            ->with(['latestRate'])
+        $collection = new HistoryCollection(QueryBuilder::for(History::class)
+//            ->with(['latestRate'])
             ->allowedFilters([
-                AllowedFilter::exact('numcode'),
-                'charcode'
+                AllowedFilter::exact('currency_id'),
+                AllowedFilter::scope('date_between', 'dateBetween'),
+
             ])
             ->paginate($request->get('size'))
             ->appends($request->input())
 
         );
         return response()->json($collection);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -55,28 +47,5 @@ class HistoryController extends Controller
     {
         $currency->load('histories');
         return response($currency);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

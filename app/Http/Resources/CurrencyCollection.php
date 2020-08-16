@@ -20,8 +20,6 @@ class CurrencyCollection extends ResourceCollection
                 'size' => $this->perPage(),
                 'total' => $this->total(),
                 'current' => $this->currentPage(),
-                // customise your pagination here
-                // https://laravel.com/docs/5.8/pagination#paginator-instance-methods
             ],
         ];
     }

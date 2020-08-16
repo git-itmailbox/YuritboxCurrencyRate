@@ -8,8 +8,8 @@ export const store = {
         currency: null,
         currencyLoading: false,
         currencyPagination: {
-            page:1,
-            size:5
+            page: 1,
+            size: 5
         },
     },
     mutations: {
@@ -24,6 +24,12 @@ export const store = {
         },
         [fromCurrenciesTypes.CURRENCY_SET_PAGINATION](state, pagination) {
             state.currencyPagination = pagination
+        },
+        [fromCurrenciesTypes.CURRENCY_RESET_PAGINATION](state) {
+            state.currencyPagination = {
+                page: 1,
+                size: 5
+            }
         },
     },
     getters: {
@@ -41,8 +47,11 @@ export const store = {
             commit(fromCurrenciesTypes.CURRENCY_SET_LOADING, false)
         },
         async [fromCurrenciesTypes.CURRENCY_FETCH_ONE]({ commit }, id) {
+            commit(fromCurrenciesTypes.CURRENCY_SET_LOADING, true)
             const response = await currencyService.fetchOne(id)
-            commit(fromCurrenciesTypes.CURRENCY_SET_ONE, response.data.data)
+            commit(fromCurrenciesTypes.CURRENCY_SET_ONE, response.data)
+            commit(fromCurrenciesTypes.CURRENCY_SET_LOADING, false)
+
         }
     }
 }

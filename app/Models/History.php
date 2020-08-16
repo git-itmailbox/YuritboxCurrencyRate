@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class History extends Model
@@ -25,5 +26,11 @@ class History extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function scopeDateBetween(Builder $query, $dateFrom, $dateTo): Builder
+    {
+        return $query->where('date', '>=', (string) $dateFrom)
+            ->where('date', '<=', (string) $dateTo);
     }
 }

@@ -16,6 +16,12 @@ class HistoryCollection extends ResourceCollection
     {
         return [
             'data' => HistoryResource::collection($this->collection),
+            'pagination' => [
+                'size' => $this->perPage(),
+                'total' => $this->total(),
+                'current' => $this->currentPage(),
+            ],
+
         ];
     }
 }

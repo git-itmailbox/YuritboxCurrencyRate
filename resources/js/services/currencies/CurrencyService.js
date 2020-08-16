@@ -10,9 +10,7 @@ export class CurrencyService {
 
     fetchAll(pagination) {
         const p = {...this.defaultPagination, ...pagination}
-        console.log(pagination,p)
         const url = query(this.API_ENDPOINT)
-            // .size(pagination.size)
             .param('size', p.size)
             .page(p.page)
             .build()
