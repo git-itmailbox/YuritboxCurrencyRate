@@ -7,11 +7,16 @@ Simple Currency Rate App based on Laravel+Vue.
 1. Clone the app
 2. Copy .env.example to .env
 3. From projects root run `docker-compose up` (docker & docker-compose required)
-4. Run in terminal`docker exec curr_rate_app php artisan migrate:fresh --seed`  
-5. go to 127.0.0.1:8080, input creds: 
+4. run `docker exec curr_rate_app composer install`
+5. run `docker exec curr_rate_app yarn install`
+6. Run in terminal`docker exec curr_rate_app php artisan migrate:fresh --seed`  
+7. run `docker exec curr_rate_app yarn dev`
+8. run `docker exec curr_rate_app php artisan jwt:secret`
+ 
+9. go to 127.0.0.1:8080, input creds: 
     login: `admin@adm.com`,
     password: `password`
-5.  Also there are two commands. 
+10.  Also there are two commands. 
     - The first for creating user: 
        `users:create {--username=} {--password=secret} {--email=}`
        so you can easily create new user like that:
