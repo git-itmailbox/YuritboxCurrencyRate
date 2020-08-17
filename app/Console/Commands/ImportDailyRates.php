@@ -66,11 +66,11 @@ class ImportDailyRates extends Command
 
         $bar->start();
 
-        while (!$now->equalTo($date)){
+        do {
             $bar->advance();
             $this->importHandle($date);
             $date->addDay();
-        }
+        } while (!$date->greaterThan($now));
         return 0;
     }
 

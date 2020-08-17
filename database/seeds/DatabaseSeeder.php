@@ -16,11 +16,12 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@adm.com',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
         $this->call([
             CurrencySeeder::class,
+            HistorySeeder::class
         ]);
     }
 }

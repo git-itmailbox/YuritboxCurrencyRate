@@ -14,7 +14,8 @@
                 <el-col :span="12">{{currency.name}}</el-col>
             </el-row>
             <el-divider content-position="center">Currency History</el-divider>
-            <CurrencyHistory :currency="$route.params.id"></CurrencyHistory>
+            <CurrencyHistory v-if="currency" :currency="currency"></CurrencyHistory>
+
         </template>
     </el-card>
 </template>
@@ -38,6 +39,7 @@
         },
         computed: {
             ...mapGetters(['currency','currencyLoading', ]),
+
         },
         methods: {
             ...mapActions([CURRENCY_FETCH_ONE]),

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,7 +44,7 @@ class CreateUser extends Command
         $password = $this->option('password');
         $email = $this->option('email');
         if(!$username || !$email) {
-            $this->info('You did not provide email or username, so enter them now');
+            $this->info('You did not provide email or username, so enter them now both');
             $username = $this->ask('Please input username');
             $email = $this->ask('Please input email');
             $password = $this->ask('Please input password');
@@ -52,6 +53,7 @@ class CreateUser extends Command
             'name' => $username,
             'email' => $email,
             'password' => Hash::make($password),
+            'email_verified_at' => now(),
         ]);
         return 0;
     }

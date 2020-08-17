@@ -58,14 +58,19 @@
                 </el-pagination>
             </el-col>
         </el-row>
-
+        <div class="small">
+            <line-chart :chart-data="ratesCollection" :height="200"></line-chart>
+        </div>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters, mapMutations} from 'vuex'
     import {HISTORY_FETCH_ALL, HISTORY_SET_ALL, HISTORY_SET_FILTER} from '../../store/history/types'
+    import LineChart from '../common/LineChart.js'
+
     export default {
+        components:{LineChart},
         data() {
             return {
                 historyFilter: {
@@ -75,11 +80,11 @@
             }
         },
         props: {
-            currency: null
+            currency: Object
         },
         created() {
             this[HISTORY_SET_ALL] = []
-            this[HISTORY_FETCH_ALL]({currency: this.currency})
+            this[HISTORY_FETCH_ALL]({currency: this.currency.id})
         },
         mounted() {
 
@@ -88,6 +93,21 @@
             ...mapGetters(['history','historyLoading', 'historyPagination', 'filter']),
             datesIsSet() {
                 return !!this.historyFilter.date_from && !!this.historyFilter.date_to;
+            },
+            ratesCollection() {
+                const ratesData = this.history.map(history => history.value)
+                const dateLabels = this.history.map(history => history.date)
+                return {
+                    labels : dateLabels,
+                    datasets : [
+                       {
+                           label : this.currency.charcode,
+                            data : [...ratesData],
+                            backgroundColor : '#F26202'
+                       }
+                    ],
+
+            }
             }
         },
         methods: {
@@ -99,7 +119,7 @@
                 this[HISTORY_FETCH_ALL]({
                     pagination:paginationOptions,
                     filter: this.filter,
-                    currency: this.currency
+                    currency: this.currency.id
                 })
             },
             handleCurrentChange(val) {
@@ -107,7 +127,7 @@
                 this[HISTORY_FETCH_ALL]({
                     pagination: paginationOptions,
                     filter: this.filter,
-                    currency: this.currency
+                    currency: this.currency.id
                 })
             },
             handleDateChanged(val) {
@@ -121,7 +141,7 @@
                 handler() {
                     this[HISTORY_FETCH_ALL]({
                         filter: this.filter,
-                        currency: this.currency
+                        currency: this.currency.id
                     })
                 },
                 deep: true
@@ -129,3 +149,10 @@
         }
     }
 </script>
+
+<style>
+    .small {
+        max-width: 600px;
+        margin:  15px auto;
+    }
+</style>

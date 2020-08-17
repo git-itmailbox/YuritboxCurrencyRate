@@ -1,3 +1,32 @@
+# About Project
+
+Simple Currency Rate App based on Laravel+Vue.
+
+## Installing
+
+1. Clone the app
+2. Copy .env.example to .env
+3. From projects root run `docker-compose up` (docker & docker-compose required)
+4. Run in terminal`docker exec curr_rate_app php artisan migrate:fresh --seed`  
+5. go to 127.0.0.1:8080, input creds: 
+    login: `admin@adm.com`,
+    password: `password`
+5.  Also there are two commands. 
+    - The first for creating user: 
+       `users:create {--username=} {--password=secret} {--email=}`
+       so you can easily create new user like that:
+       
+       `docker exec curr_rate_app php artisan users:create --username=ExampleUser --email=example@mail.com`
+    - The second is for importing data from `http://www.cbr.ru/scripts/XML_daily.asp` 
+    
+        `rates:import {--from-date=}`
+        
+        for example:
+        
+        `docker exec curr_rate_app php artisan rates:import` this will import actual currency rates
+        
+        You can use --from-date=Y/m/d to parse period from date till now  
+ 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
